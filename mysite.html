@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salazarrr Never Die!!!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        button.secondary {
+            background: linear-gradient(to right, #95a5a6, #7f8c8d);
+        }
+        
+        button.danger {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-group button {
+            flex: 1;
+        }
+        
+        .document-list {
+            margin-top: 20px;
+        }
+        
+        .document-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .document-item:hover {
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .document-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        
+        .document-date {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .password-hint {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .password-strength {
+            height: 5px;
+            border-radius: 5px;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+        
+        .strength-0 {
+            width: 20%;
+            background-color: #e74c3c;
+        }
+        
+        .strength-1 {
+            width: 40%;
+            background-color: #e67e22;
+        }
+        
+        .strength-2 {
+            width: 60%;
+            background-color: #f1c40f;
+        }
+        
+        .strength-3 {
+            width: 80%;
+            background-color: #2ecc71;
+        }
+        
+        .strength-4 {
+            width: 100%;
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 Sistema de Documentos Seguro</h1>
+            <p>Armazene seus documentos com segurança</p>
+        </div>
+        
+        <div class="content">
+            <!-- Tela de Login -->
+            <div id="login-screen" class="screen active">
+                <div class="form-group">
+                    <label for="password">Digite sua senha:</label>
+                    <input type="password" id="password" placeholder="Senha de acesso">
+                    <div class="password-hint">Esta senha será usada para acessar seus documentos.</div>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="login-btn">Acessar Documentos</button>
+                </div>
+                
+                <div class="alert alert-error" id="login-error">
+                    Senha incorreta. Tente novamente.
+                </div>
+            </div>
+            
+            <!-- Tela de Documentos -->
+            <div id="documents-screen" class="screen">
+                <div class="btn-group">
+                    <button id="new-document-btn">➕ Novo Documento</button>
+                    <button id="logout-btn" class="secondary">Sair</button>
+                </div>
+                
+                <div class="document-list" id="document-list">
+                    <!-- Lista de documentos será gerada aqui -->
+                </div>
+                
+                <div class="empty-state" id="empty-state">
+                    <i>📝</i>
+                    <h3>Nenhum documento ainda</h3>
+                    <p>Crie seu primeiro documento clicando no botão acima.</p>
+                </div>
+            </div>
+            
+            <!-- Tela de Edição de Documento -->
+            <div id="edit-screen" class="screen">
+                <div class="form-group">
+                    <label for="document-title">Título do Documento:</label>
+                    <input type="text" id="document-title" placeholder="Digite um título">
+                </div>
+                
+                <div class="form-group">
+                    <label for="document-content">Conteúdo:</label>
+                    <textarea id="document-content" placeholder="Digite o conteúdo do seu documento aqui..."></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="save-document-btn">💾 Salvar Documento</button>
+                    <button id="cancel-edit-btn" class="secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos da interface
+        const loginScreen = document.getElementById('login-screen');
+        const documentsScreen = document.getElementById('documents-screen');
+        const editScreen = document.getElementById('edit-screen');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const loginError = document.getElementById('login-error');
+        const newDocumentBtn = document.getElementById('new-document-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const documentList = document.getElementById('document-list');
+        const emptyState = document.getElementById('empty-state');
+        const documentTitle = document.getElementById('document-title');
+        const documentContent = document.getElementById('document-content');
+        const saveDocumentBtn = document.getElementById('save-document-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        
+        // Estado da aplicação
+        let currentPassword = '';
+        let documents = [];
+        let editingDocumentId = null;
+        
+        // Verificar se já existe uma senha salva
+        function checkStoredPassword() {
+            const storedPassword = localStorage.getItem('documentPassword');
+            if (storedPassword) {
+                currentPassword = storedPassword;
+                showScreen(documentsScreen);
+                loadDocuments();
+            } else {
+                showScreen(loginScreen);
+            }
+        }
+        
+        // Alternar entre telas
+        function showScreen(screen) {
+            loginScreen.classList.remove('active');
+            documentsScreen.classList.remove('active');
+            editScreen.classList.remove('active');
+            screen.classList.add('active');
+        }
+        
+        // Carregar documentos do armazenamento local
+        function loadDocuments() {
+            const encryptedDocuments = localStorage.getItem('encryptedDocuments');
+            if (encryptedDocuments && currentPassword) {
+                try {
+                    // Em uma aplicação real, você usaria uma biblioteca de criptografia
+                    // Aqui estamos usando uma abordagem simplificada apenas para demonstração
+                    const decrypted = simpleDecrypt(encryptedDocuments, currentPassword);
+                    documents = JSON.parse(decrypted) || [];
+                } catch (e) {
+                    console.error("Erro ao carregar documentos:", e);
+                    documents = [];
+                }
+            } else {
+                documents = [];
+            }
+            
+            renderDocuments();
+        }
+        
+        // Salvar documentos no armazenamento local
+        function saveDocuments() {
+            if (currentPassword) {
+                // Em uma aplicação real, você usaria uma biblioteca de criptografia
+                const encrypted = simpleEncrypt(JSON.stringify(documents), currentPassword);
+                localStorage.setItem('encryptedDocuments', encrypted);
+            }
+        }
+        
+        // Renderizar lista de documentos
+        function renderDocuments() {
+            documentList.innerHTML = '';
+            
+            if (documents.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            documents.forEach((doc, index) => {
+                const docElement = document.createElement('div');
+                docElement.className = 'document-item';
+                
+                const docInfo = document.createElement('div');
+                docInfo.innerHTML = `
+                    <div class="document-title">${doc.title || 'Documento sem título'}</div>
+                    <div class="document-date">${new Date(doc.date).toLocaleDateString('pt-BR')}</div>
+                `;
+                
+                const docActions = document.createElement('div');
+                docActions.className = 'document-actions';
+                
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Editar';
+                editBtn.addEventListener('click', () => editDocument(index));
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Excluir';
+                deleteBtn.className = 'danger';
+                deleteBtn.addEventListener('click', () => deleteDocument(index));
+                
+                docActions.appendChild(editBtn);
+                docActions.appendChild(deleteBtn);
+                
+                docElement.appendChild(docInfo);
+                docElement.appendChild(docActions);
+                
+                documentList.appendChild(docElement);
+            });
+        }
+        
+        // Criar novo documento
+        function newDocument() {
+            editingDocumentId = null;
+            documentTitle.value = '';
+            documentContent.value = '';
+            showScreen(editScreen);
+        }
+        
+        // Editar documento existente
+        function editDocument(id) {
+            editingDocumentId = id;
+            documentTitle.value = documents[id].title || '';
+            documentContent.value = documents[id].content || '';
+            showScreen(editScreen);
+        }
+        
+        // Salvar documento (novo ou editado)
+        function saveDocument() {
+            const title = documentTitle.value.trim();
+            const content = documentContent.value.trim();
+            
+            if (!content) {
+                alert('Por favor, adicione algum conteúdo ao documento.');
+                return;
+            }
+            
+            const documentData = {
+                title: title || 'Documento sem título',
+                content: content,
+                date: new Date().toISOString()
+            };
+            
+            if (editingDocumentId !== null) {
+                // Editando documento existente
+                documents[editingDocumentId] = documentData;
+            } else {
+                // Criando novo documento
+                documents.push(documentData);
+            }
+            
+            saveDocuments();
+            renderDocuments();
+            showScreen(documentsScreen);
+        }
+        
+        // Excluir documento
+        function deleteDocument(id) {
+            if (confirm('Tem certeza que deseja excluir este documento?')) {
+                documents.splice(id, 1);
+                saveDocuments();
+                renderDocuments();
+            }
+        }
+        
+        // Funções de criptografia simplificadas
+        // ATENÇÃO: Estas são funções básicas para demonstração
+        // Em um ambiente de produção, use bibliotecas de criptografia robustas
+        function simpleEncrypt(text, password) {
+            // Implementação simplificada - NÃO use em produção
+            let result = '';
+            for (let i = 0; i < text.length; i++) {
+                result += String.fromCharCode(text.charCodeAt(i) ^ password.charCodeAt(i % password.length));
+            }
+            return btoa(result);
+        }
+        
+        function simpleDecrypt(encryptedText, password) {
+            // Implementação simplificada - NÃO use em produção
+            try {
+                const text = atob(encryptedText);
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    result += String.fromCharCode(text.charCodeAt(i) ^ password.charCodeAt(i % password.length));
+                }
+                return result;
+            } catch (e) {
+                return '';
+            }
+        }
+        
+        // Event Listeners
+        loginBtn.addEventListener('click', () => {
+            const password = passwordInput.value.trim();
+            
+            if (!password) {
+                loginError.textContent = 'Por favor, digite uma senha.';
+                loginError.style.display = 'block';
+                return;
+            }
+            
+            // Verificar se é uma nova senha ou senha existente
+            const storedPassword = localStorage.getItem('documentPassword');
+            
+            if (storedPassword) {
+                // Tentativa de login
+                if (password === storedPassword) {
+                    currentPassword = password;
+                    showScreen(documentsScreen);
+                    loadDocuments();
+                } else {
+                    loginError.textContent = 'Senha incorreta. Tente novamente.';
+                    loginError.style.display = 'block';
+                }
+            } else {
+                // Primeiro acesso - criar nova senha
+                localStorage.setItem('documentPassword', password);
+                currentPassword = password;
+                showScreen(documentsScreen);
+                documents = [];
+                saveDocuments();
+                renderDocuments();
+            }
+        });
+        
+        newDocumentBtn.addEventListener('click', newDocument);
+        
+        logoutBtn.addEventListener('click', () => {
+            currentPassword = '';
+            passwordInput.value = '';
+            showScreen(loginScreen);
+        });
+        
+        saveDocumentBtn.addEventListener('click', saveDocument);
+        
+        cancelEditBtn.addEventListener('click', () => {
+            showScreen(documentsScreen);
+        });
+        
+        // Permitir login com Enter
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        // Inicializar a aplicação
+        checkStoredPassword();
+    </script>
+</body>
+</html>
